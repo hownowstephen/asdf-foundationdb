@@ -42,7 +42,7 @@ get_filename() {
     local platform="$1"
     local version="$2"
 
-    echo "foundationdb-${platform}.zip"
+    echo "foundationdb-${platform}.tar.gz"
 }
 
 get_download_url() {
