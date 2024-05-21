@@ -32,8 +32,13 @@ install_foundationdb() {
   rm -f $binary_path 2>/dev/null || true
 
   echo "Copying binary"
-  tar -zxf ${download_path} --directory $tmp_download_dir
-  cp ${tmp_download_dir}/foundationdb-${platform} ${bin_install_path}/foundationdb
+  if [ "$platform" == "linux-amd64" ]; then
+    dpkg -x ${download_path} $tmp_download_dir
+    cp ${tmp_download_dir}/usr/lib/foundationdb/fdbcli ${bin_install_path}/foundationdb
+  else
+    tar -zxf ${download_path} --directory $tmp_download_dir
+    cp ${tmp_download_dir}/foundationdb-${platform} ${bin_install_path}/foundationdb
+  fi
 
   chmod +x ${binary_path}
 }
@@ -42,7 +47,11 @@ get_filename() {
     local platform="$1"
     local version="$2"
 
-    echo "foundationdb-${platform}.tar.gz"
+    if [ "$platform" == "linux-amd64" ]; then
+      echo "foundationdb-clients_${version}-1_amd64.deb"
+    else
+      echo "foundationdb-${platform}.tar.gz"
+    fi
 }
 
 get_download_url() {
