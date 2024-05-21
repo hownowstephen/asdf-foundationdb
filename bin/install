@@ -34,7 +34,7 @@ install_foundationdb() {
   echo "Copying binary"
   if [ "$platform" == "linux-amd64" ]; then
     dpkg -x ${download_path} $tmp_download_dir
-    cp ${tmp_download_dir}/usr/bin/fdbcli ${bin_install_path}/foundationdb
+    cp ${tmp_download_dir} ${bin_install_path}/foundationdb
   else
     tar -zxf ${download_path} --directory $tmp_download_dir
     cp ${tmp_download_dir}/foundationdb-${platform} ${bin_install_path}/foundationdb
